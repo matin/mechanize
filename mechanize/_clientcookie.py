@@ -406,6 +406,14 @@ class Cookie:
         args.append("rfc2109=%s" % repr(self.rfc2109))
         return "Cookie(%s)" % ", ".join(args)
 
+    def __eq__(self, other):
+        attrs = ["version", "name", "value", "port", "port_specified", "domain",
+                 "domain_specified", "domain_initial_dot", "path",
+                 "path_specified", "secure", "expires", "discard", "comment",
+                 "comment_url",]
+        return all(getattr(self, attr) == getattr(other, attr) for attr in
+                   attrs)
+
 
 class CookiePolicy:
     """Defines which cookies get accepted from and returned to server.
